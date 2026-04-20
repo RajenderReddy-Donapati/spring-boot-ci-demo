@@ -1,5 +1,5 @@
 name: Docker Build -> Push -> Deploy
-  on:
+on:
     push:
         branches: [ "main" ]
 
