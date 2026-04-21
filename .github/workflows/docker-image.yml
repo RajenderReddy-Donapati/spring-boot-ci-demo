@@ -1,14 +1,13 @@
 name: Docker Build -> Push -> Deploy
 
 on:
-        push: 
-            branches: [ "main" ]
+  push:
+    branches: [ "main" ]
     
 jobs:
-        build-and-deploy:
-            runs-on: ubuntu-latest
-
-steps:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+  steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -57,10 +56,3 @@ steps:
          docker run -d --name spring-demo -p 8081:8081 ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-ci-demo:latest
     
  
-
-
-
-
-
-
-      
