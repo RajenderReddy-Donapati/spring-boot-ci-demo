@@ -44,28 +44,14 @@ jobs:
         run: docker push ${{ secrets.DOCKERHB_USERNAME }}/spring-boot-ci-demo:latest
     
       - name: SSH and Deploy to EC2
-        uses: appleboy/ssh-action@v1
-        with:
+          uses: appleboy/ssh-action@v1
+          with:
                   host: ${{ secrets.EC2_HOST }}
                   username: ${{ secrets.EC2_USER }}
                   key: ${{ secrets.EC2_SSH_KEY }}
                   script: |
-                    # 1. Login to Docker Hub on the EC2 server
                     echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-                    
-                    # 2. Pull the latest image we just pushed
                     docker pull ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-ci-demo:latest
-                    
-                    # 3. Stop and remove the old container (ignore error if it doesn't exist)
                     docker stop spring-app || true
                     docker rm spring-app || true
-                    
-                    # 4. Run the new container
-                    # Using -p 80:8080 maps the server's web port to your app
-                    docker run -d --name spring-app -p 80:8080 ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-ci-demo:latest 
-
-           
-           
-           
-           
-           
+                    docker run -d --name spring-app -p 80:8080 ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-ci-demo:latest
