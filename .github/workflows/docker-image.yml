@@ -50,8 +50,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-             echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-ci-demo:latest
-             docker stop spring-app || true
-             docker rm spring-app || true
-             docker run -d --name spring-app -p 80:8080 ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-ci-demo:latest
+            docker stop ci-demo || true
+            docker rm ci-demo || true
+            docker pull ${{ secrets.DOCKERHB_USERNAME }}/spring-boot-ci-demo:latest
+            docker run -d --name ci-demo -p 80:8080 ${{ secrets.DOCKERHB_USERNAME }}/spring-boot-ci-demo:latest
